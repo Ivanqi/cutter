@@ -2,6 +2,7 @@
 #define SEGMENTBASE_H
 
 #include <unordered_set>
+#include "PreFilter.h"
 #include "Unicode.h"
 #include <string>
 

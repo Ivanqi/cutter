@@ -8,6 +8,25 @@ using std::string;
 
 typedef uint32_t Rune;
 
+struct Word
+{
+    string word;
+    uint32_t offset;
+    uint32_t unicode_offset;
+    uint32_t unicode_length;
+    Word(const string& w, uint32_t o)
+        :word(w), offset(o)
+    {
+
+    }
+
+    Word(const string& w, uint32_t o, uint32_t unicode_offset, uint32_t unicode_length)
+        : word(w), offset(o), unicode_offset(unicode_offset), unicode_length(unicode_length)
+    {
+
+    }
+};
+
 struct RuneStr
 {
     Rune rune;
@@ -53,6 +72,34 @@ struct RuneStrLite
         :rune(r), len(l)
     {
 
+    }
+};
+
+// [left, right]
+struct WordRange
+{
+    RuneStrArray::const_iterator left;
+    RuneStrArray::const_iterator right;
+    
+    WordRange(RuneStrArray::const_iterator l, RuneStrArray::const_iterator r)
+        : left(l), right(r)
+    {
+
+    }
+
+    size_t Length() const
+    {
+        return right - left + 1;
+    }
+
+    bool IsAllAscii() const
+    {
+        for (RuneStrArray::const_iterator iter = left; iter <= right; ++iter) {
+            if (iter->rune >= 0x80) {
+                return false;
+            }
+        }
+        return true;
     }
 };
 
@@ -197,6 +244,14 @@ inline Unicode DecodeRunesInString(const string& s)
     Unicode result;
     DecodeRunesInString(s, result);
     return result;
+}
+
+inline void GetStringsFromWords(const vector<Word>& words, vector<string>& strs)
+{
+    strs.resize(words.size());
+    for (size_t i = 0; i < words.size(); ++i) {
+        strs[i] = words[i].word;
+    }
 }
 
 #endif
