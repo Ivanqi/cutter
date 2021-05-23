@@ -8,7 +8,10 @@
 class MixSegment: public SegmentTagged
 {
     public:
-
+        MixSegment()
+        {
+            
+        }
 };
 
 #endif

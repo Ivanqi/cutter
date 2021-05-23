@@ -5,6 +5,8 @@
 #include <string>
 #include <stdarg.h>
 #include <vector>
+#include <algorithm>
+#include <functional>
 
 inline std::string string_format(const char *fmt, ...)
 {
@@ -142,5 +144,63 @@ void unicodeToUtf8(Uint16ContainerConIter begin, Uint16ContainerConIter end, std
     }
 }
 
+
+inline static std::string& LTrim(std::string &s, char x)
+{
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::bind2nd(std::equal_to<char>(), x))));
+    return s;
+}
+
+inline static std::string& RTrim(std::string &s, char x)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::bind2nd(std::equal_to<char>(), x))).base(), s.end());
+    return s;
+}
+
+inline static std::string& Trim(std::string &s, char x)
+{
+    return LTrim(RTrim(s, x), x);
+}
+
+inline bool IsSpace(unsigned c) 
+{
+  // when passing large int as the argument of isspace, it core dump, so here need a type cast.
+  return c > 0xff ? false : std::isspace(c & 0xff) != 0;
+}
+
+inline std::string& LTrim(std::string &s) 
+{
+  s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<unsigned, bool>(IsSpace))));
+  return s;
+}
+
+inline std::string& RTrim(std::string &s) 
+{
+  s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<unsigned, bool>(IsSpace))).base(), s.end());
+  return s;
+}
+
+inline std::string& Trim(std::string &s) 
+{
+  return LTrim(RTrim(s));
+}
+
+inline bool StartsWith(const std::string& str, const std::string& prefix)
+{
+    if (prefix.length() > str.length()) {
+        return false;
+    }
+
+    return 0 == str.compare(0, prefix.length(), prefix);
+}
+
+inline bool EndsWith(const std::string& str, const std::string& suffix)
+{
+    if (suffix.length() > str.length()) {
+        return false;
+    }
+
+    return 0 == str.compare(str.length() - suffix.length(), suffix.length(), suffix);
+}
 
 #endif
