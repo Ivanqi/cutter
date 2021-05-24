@@ -28,7 +28,7 @@ class PosTagger
             segment.Cut(src, CutRes);
 
             for (vector<string>::iterator itr = CutRes.begin(); itr != CutRes.end(); ++itr) {
-                res.push_back(make_pair(*it, LookupTag(*itr, segment)));
+                res.push_back(make_pair(*itr, LookupTag(*itr, segment)));
             }
 
             return !res.empty();

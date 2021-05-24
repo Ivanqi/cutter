@@ -100,7 +100,7 @@ struct HMMModel
         return cit->second;
     }
 
-    bool GetLine(ifstream& iflie, string& line)
+    bool GetLine(ifstream& ifile, string& line)
     {
         while (std::getline(ifile, line)) {
             Trim(line);

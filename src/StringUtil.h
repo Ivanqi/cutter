@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <functional>
 #include <sstream>
+#include "Unicode.h"
 
 inline std::string string_format(const char *fmt, ...)
 {
@@ -230,6 +231,24 @@ string Join(T begin, T end, const string& connector)
     string res;
     Join(begin, end, res, connector);
     return res;
+}
+
+// [left, right]
+inline Word GetWordFromRunes(const string& s, RuneStrArray::const_iterator left, RuneStrArray::const_iterator right) 
+{
+    assert(right->offset >= left->offset);
+
+    uint32_t len = right->offset - left->offset + right->len;
+    uint32_t unicode_length = right->unicode_offset - left->unicode_offset + right->unicode_length;
+
+    return Word(s.substr(left->offset, len), left->offset, left->unicode_offset, unicode_length);
+}
+
+inline void GetWordsFromWordRanges(const string& s, const vector<WordRange>& wrs, vector<Word>& words) 
+{
+    for (size_t i = 0; i < wrs.size(); i++) {
+        words.push_back(GetWordFromRunes(s, wrs[i].left, wrs[i].right));
+    }
 }
 
 #endif

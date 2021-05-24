@@ -19,9 +19,9 @@ const size_t MAX_WORD_LENGTH = 512;
 
 struct DictUnit 
 {
-    Unicode word;
-    double weight;
-    string tag;
+    Unicode word;   // 字符串，unicode编码
+    double weight;  // 权重
+    string tag;     // 标签
 };
 
 

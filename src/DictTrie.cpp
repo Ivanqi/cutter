@@ -148,6 +148,7 @@ void DictTrie::Init(const string& dict_path, const string& user_dict_paths, User
     CalculateWeight(static_node_infos_, freq_sum_);
     SetStaticWordWeights(user_word_weight_opt);
 
+    // 加载用户字典
     if (user_dict_paths.size()) {
         LoadUserDict(user_dict_paths);
     }
@@ -156,6 +157,7 @@ void DictTrie::Init(const string& dict_path, const string& user_dict_paths, User
     CreateTrie(static_node_infos_);
 }
 
+// 建立trie树
 void DictTrie::CreateTrie(const vector<DictUnit>& dictUnits)
 {
     assert(dictUnits.size());
@@ -170,6 +172,7 @@ void DictTrie::CreateTrie(const vector<DictUnit>& dictUnits)
     trie_ = new Trie(words, valuePointers);
 }
 
+// 往DictUnit增加值
 bool DictTrie::MakeNodeInfo(DictUnit& node_info, const string& word, double weight, const string& tag)
 {
     if (!DecodeRunesInString(word, node_info.word)) {
@@ -182,6 +185,7 @@ bool DictTrie::MakeNodeInfo(DictUnit& node_info, const string& word, double weig
     return true;
 }
 
+// 加载字典
 void DictTrie::LoadDict(const string& filePath)
 {
     ifstream ifs(filePath.c_str());
@@ -206,6 +210,7 @@ void DictTrie::LoadDict(const string& filePath)
     }
 }
 
+// 按从权重从小到大排序
 bool DictTrie::WeightCompare(const DictUnit& lhs, const DictUnit& rhs)
 {
     return lhs.weight < rhs.weight;
@@ -238,6 +243,7 @@ void DictTrie::SetStaticWordWeights(UserWordWeightOption option)
     }
 }
 
+// 计算所有字符串的权重
 double DictTrie::CalcFreqSum(const vector<DictUnit>& node_infos) const
 {
     double sum = 0.0;
@@ -248,6 +254,7 @@ double DictTrie::CalcFreqSum(const vector<DictUnit>& node_infos) const
     return sum;
 }
 
+// 计算每个平均权重，然后求对数函数
 void DictTrie::CalculateWeight(vector<DictUnit>& node_infos, double sum) const
 {
     assert(sum > 0.0);
