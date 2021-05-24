@@ -4,7 +4,9 @@
 #include "LocalVector.h"
 
 #include <string>
+#include <vector>
 using std::string;
+using std::vector;
 
 typedef uint32_t Rune;
 
@@ -29,11 +31,11 @@ struct Word
 
 struct RuneStr
 {
-    Rune rune;
-    uint32_t offset;
-    uint32_t len;
-    uint32_t unicode_offset;
-    uint32_t unicode_length;
+    Rune rune;                  // unicode 编码
+    uint32_t offset;            // 字符偏移量
+    uint32_t len;               // 字符串长度
+    uint32_t unicode_offset;    // unicode 偏移量    
+    uint32_t unicode_length;    // unicode 长度
     
     RuneStr()
         : rune(0), offset(0), len(0), unicode_offset(0), unicode_length(0)
@@ -252,6 +254,14 @@ inline void GetStringsFromWords(const vector<Word>& words, vector<string>& strs)
     for (size_t i = 0; i < words.size(); ++i) {
         strs[i] = words[i].word;
     }
+}
+
+// 通过两个RuneStr之间的偏移量，来裁剪字符串
+inline string GetStringFromRunes(const string& s, RuneStrArray::const_iterator left, RuneStrArray::const_iterator right)
+{
+    assert(right->offset >= left->offset);
+    uint32_t len = right->offset - left->offset + right->len;
+    return s.substr(left->offset, len);
 }
 
 #endif

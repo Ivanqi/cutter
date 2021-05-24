@@ -43,10 +43,13 @@ class PreFilter
             range.begin = cursor_;
 
             while (cursor_ != sentence_.end()) {
+                // 查询与symbols_ 相同的unicode 编码
                 if (symbols_.find(cursor_->rune) != symbols_.end()) {
                     if (range.begin == cursor_) {
                         cursor_++;
                     }
+                    range.end = cursor_;
+                    return range;
                 }
                 cursor_++;
             }

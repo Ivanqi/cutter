@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <sstream>
 
 inline std::string string_format(const char *fmt, ...)
 {
@@ -201,6 +202,34 @@ inline bool EndsWith(const std::string& str, const std::string& suffix)
     }
 
     return 0 == str.compare(str.length() - suffix.length(), suffix.length(), suffix);
+}
+
+// 按给定的连接符，连接两个字符串
+template<class T>
+void Join(T begin, T end, string& res, const string& connector) 
+{
+    if (begin == end) {
+        return;
+    }
+
+    std::stringstream ss;
+    ss << *begin;
+    begin++;
+
+    while (begin != end) {
+        ss << connector << *begin;
+        begin++;
+    }
+
+    res = ss.str();
+}
+
+template<class T>
+string Join(T begin, T end, const string& connector)
+{
+    string res;
+    Join(begin, end, res, connector);
+    return res;
 }
 
 #endif
