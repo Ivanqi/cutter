@@ -5,18 +5,18 @@
 #include "StringUtil.h"
 
 typedef uint16_t UnicodeValueType;
-typedef LocalVector<UnicodeValueType> Unicode;
+typedef LocalVector<UnicodeValueType> Unicodes;
 
 namespace TransCode
 {
-    inline Unicode decode(const std::string& str)
+    inline Unicodes decode(const std::string& str)
     {
-        Unicode ret;
+        Unicodes ret;
         utf8ToUnicode(str, ret);
         return ret;
     }
 
-    inline void encode(Unicode::const_iterator begin, Unicode::const_iterator end, std::string& res) 
+    inline void encode(Unicodes::const_iterator begin, Unicodes::const_iterator end, std::string& res) 
     {
         unicodeToUtf8(begin, end, res);
     }

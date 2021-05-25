@@ -17,7 +17,7 @@ class MPSegment: public SegmentTagged
     
     public:
         MPSegment(const string& dictPath, const string& userDictPath = "")
-            :dictTrie_(new DictTrie(dictPath, userDictPath)), isNeedDestroy_(true)
+            : dictTrie_(new DictTrie(dictPath, userDictPath)), isNeedDestroy_(true)
         {
             
         }

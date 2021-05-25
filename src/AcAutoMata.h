@@ -62,22 +62,22 @@ class AcAutoMata
         ~AcAutoMata();
 
     public:
-        const TrieNode* find(Unicode::const_iterator begin, Unicode::const_iterator end) const;
+        const TrieNode* find(Unicodes::const_iterator begin, Unicodes::const_iterator end) const;
 
         void buildFailurePointer();
 
         void printfFailurePointer();
 
-        void insertNode(const Unicode& key);
+        void insertNode(const Unicodes& key);
 
-        string match(Unicode::const_iterator begin, Unicode::const_iterator end, string matchStr, char replaceStr);
+        string match(Unicodes::const_iterator begin, Unicodes::const_iterator end, string matchStr, char replaceStr);
 
         string replaceFun(unordered_map<int, int> check, string text, char replaceStr);
 
         void deleteNode(TrieNode* node);
     
     private:
-        int calcUnicodeLen(Unicode::const_iterator uni);
+        int calcUnicodeLen(Unicodes::const_iterator uni);
 };
 
 #endif

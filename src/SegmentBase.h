@@ -16,7 +16,7 @@ class SegmentBase
     public:
         SegmentBase()
         {
-
+            ResetSeparators(SPECIAL_SEPARATORS);
         }
 
         virtual ~SegmentBase()

@@ -19,7 +19,8 @@ void test_case_1() {
 
         segment.Cut(sentence, words);
         actual = Join(words.begin(), words.end(), "/");
-        assert(sentence == expected);
+        cout << "actual: " << actual << endl;
+        assert(actual == expected);
     }
 }
 

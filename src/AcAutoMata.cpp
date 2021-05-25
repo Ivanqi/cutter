@@ -7,12 +7,12 @@ AcAutoMata::~AcAutoMata()
     }
 }
 
-const TrieNode* AcAutoMata::find(Unicode::const_iterator begin, Unicode::const_iterator end) const
+const TrieNode* AcAutoMata::find(Unicodes::const_iterator begin, Unicodes::const_iterator end) const
 {
     TrieNode::NextMap::const_iterator citer;
     const TrieNode *ptNode = root_;
 
-    for (Unicode::const_iterator it = begin; it != end; it++) {
+    for (Unicodes::const_iterator it = begin; it != end; it++) {
         // build automation
         assert(ptNode);
         if (NULL == ptNode->next || ptNode->next->end() == (citer = ptNode->next->find(*it))) {
@@ -99,7 +99,7 @@ void AcAutoMata::printfFailurePointer()
     }
 }
 
-void AcAutoMata::insertNode(const Unicode& key)
+void AcAutoMata::insertNode(const Unicodes& key)
 {
     TrieNode *ptNode = root_;
 
@@ -107,7 +107,7 @@ void AcAutoMata::insertNode(const Unicode& key)
 
     int len = 0;
 
-    for (Unicode::const_iterator citer = key.begin(); citer != key.end(); citer++) {
+    for (Unicodes::const_iterator citer = key.begin(); citer != key.end(); citer++) {
         if (NULL == ptNode->next) {
             ptNode->next = new TrieNode::NextMap;
         }
@@ -131,14 +131,14 @@ void AcAutoMata::insertNode(const Unicode& key)
     ptNode->length = len;
 }
 
-string AcAutoMata::match(Unicode::const_iterator begin, Unicode::const_iterator end, string matchStr, char replaceStr)
+string AcAutoMata::match(Unicodes::const_iterator begin, Unicodes::const_iterator end, string matchStr, char replaceStr)
 {
     TrieNode *ptNode = root_;
     string res;
     int i = 0;
     unordered_map<int, int> check;
 
-    for (Unicode::const_iterator citer = begin; citer != end; citer++) {
+    for (Unicodes::const_iterator citer = begin; citer != end; citer++) {
         /**
          * 使用 fail指针对 p的值进行矫正
          * 比如查询到某个模式串, p 值不是指向root. 然后主串继续遍历，主串的值在p上匹配不到值，需要fail指针把p指向root
@@ -201,7 +201,7 @@ void AcAutoMata::deleteNode(TrieNode* node)
     delete node;
 }
 
-int AcAutoMata::calcUnicodeLen(Unicode::const_iterator uni)
+int AcAutoMata::calcUnicodeLen(Unicodes::const_iterator uni)
 {
     uint16_t ui = *uni;
 
