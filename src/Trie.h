@@ -27,10 +27,10 @@ struct DictUnit
 
 struct Dag
 {
-    RuneStr runestr;
+    RuneStr runestr;    // 字符串, unicode编码
     LocalVector<pair<size_t, const DictUnit*>> nexts;
     const DictUnit *pInfo;
-    double weight;
+    double weight;      // 权重
     size_t nextPos;
 
     Dag()
@@ -46,8 +46,8 @@ class TrieNode
 {
     public:
         typedef unordered_map<TrieKey, TrieNode*> NextMap;
-        NextMap *next;
-        const DictUnit *ptValue;
+        NextMap *next;                                      // 字典集合
+        const DictUnit *ptValue;                            // 字符信息
 
     public:
         TrieNode()

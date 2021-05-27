@@ -48,7 +48,7 @@ void Trie::Find(RuneStrArray::const_iterator begin, RuneStrArray::const_iterator
         // 获得 unicode 的值
         res[i].runestr = *(begin + i);
 
-        // 查找，遍历
+        // 在root_处查找，遍历
         if (root_->next != NULL && root_->next->end() != (citer = root_->next->find(res[i].runestr.rune))) {
             ptNode = citer->second;
         } else {
@@ -62,6 +62,7 @@ void Trie::Find(RuneStrArray::const_iterator begin, RuneStrArray::const_iterator
             res[i].nexts.push_back(pair<size_t, const DictUnit*>(i, static_cast<const DictUnit*>(NULL)));
         }
 
+        // 在 ptNode 中再搜索 i + 1 到 (end - begin) 个字符
         for (size_t j = i + 1; j < size_t(end - begin) && (j - i + 1) <= max_word_len; j++) {
             if (ptNode == NULL || ptNode->next == NULL) {
                 break;

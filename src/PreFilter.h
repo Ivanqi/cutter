@@ -37,6 +37,9 @@ class PreFilter
             return cursor_ != sentence_.end();
         }
 
+        /**
+         * 返回符合symbols_标志的首尾地址
+         */
         Range Next()
         {
             Range range;
