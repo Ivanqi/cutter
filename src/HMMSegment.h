@@ -8,6 +8,9 @@
 #include "HMMModel.h"
 #include "SegmentBase.h"
 
+/**
+ * HMM模型来进行分词，主要算法思路是根据(B,E,M,S)四个状态来代表每个字的隐藏状态
+ */
 class HMMSegment: public SegmentBase
 {
     private:

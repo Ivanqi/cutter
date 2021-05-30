@@ -7,6 +7,9 @@
 #include "HMMSegment.h"
 #include "PosTagger.h"
 
+/**
+ * 使用MPSegment和HMMSegment
+ */
 class MixSegment: public SegmentTagged
 {
     private:

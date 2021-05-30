@@ -8,6 +8,10 @@
 #include "SegmentTagged.h"
 #include "PosTagger.h"
 
+/**
+ * (Maximum Probability)最大概率法
+ * 负责根据Trie树构建有向无环图进行动态规划算法，是分词算法的核型
+ */
 class MPSegment: public SegmentTagged
 {
     private:
@@ -90,6 +94,7 @@ class MPSegment: public SegmentTagged
         }
 
     private:
+        // 从后往前的动态规划算法
         void CalcDP(vector<Dag>& dags) const
         {
             size_t nextPos;
