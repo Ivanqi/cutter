@@ -27,10 +27,10 @@ struct DictUnit
 
 struct Dag
 {
-    RuneStr runestr;    // 字符串, unicode编码
+    RuneStr runestr;        // 字符串, unicode编码
     LocalVector<pair<size_t, const DictUnit*>> nexts;
-    const DictUnit *pInfo;
-    double weight;      // 权重
+    const DictUnit *pInfo;  
+    double weight;          // 权重
     size_t nextPos;
 
     Dag()

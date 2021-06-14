@@ -98,14 +98,26 @@ class MPSegment: public SegmentTagged
         }
 
     private:
-        // 从后往前的动态规划算法
+        /**
+         * 从后往前的动态规划算法
+         * 例子:
+         *  候选词
+         *      国民党当局破坏(不为NULL的情况)
+         *          国 {民, 党, 当, 局}
+         *          民 {民, 党, 当, 局, 破}
+         *          党 {当, 局, 破, 坏}
+         *          当 {局, 破, 坏}
+         *          局 {破, 坏}
+         *          破 {坏}
+         *          坏 {}
+         */
         void CalcDP(vector<Dag>& dags) const
         {
             size_t nextPos;
             const DictUnit *p;
             double val;
 
-            // 前趋词
+            // 后趋词
             for (vector<Dag>::reverse_iterator rit = dags.rbegin(); rit != dags.rend(); rit++) {
                 rit->pInfo = NULL;
                 rit->weight = MIN_DOUBLE;
@@ -116,16 +128,19 @@ class MPSegment: public SegmentTagged
                     p = it->second;
                     val = 0.0;
 
+                    // 在dags中找后一个单词的权重，寻找它的后趋词
                     if (nextPos + 1 < dags.size()) {
                         val += dags[nextPos + 1].weight;
                     }
 
+                    // 当前词的权重
                     if (p) {
                         val += p->weight;
                     } else {
                         val += dictTrie_->GetMinWeight();
                     }
 
+                    // 如果后一个词的权重 + 当前词的权重大于 rit词的权重，更新rit词的权重。这样就得到最佳的权重的词
                     if (val > rit->weight) {
                         rit->pInfo = p;
                         rit->weight = val;
@@ -134,6 +149,7 @@ class MPSegment: public SegmentTagged
             }
         }
 
+        // 选择dags的候选词的权重得到相关的最大概率的词组，然后记录到words中
         void CutByDag(RuneStrArray::const_iterator begin, RuneStrArray::const_iterator end, const vector<Dag>& dags, vector<WordRange>& words) const
         {
             size_t i = 0;
