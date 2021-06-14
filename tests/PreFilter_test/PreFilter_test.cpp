@@ -22,6 +22,7 @@ void test_case_1() {
             PreFilter::Range range;
             range = filter.Next();
             string tmp = GetStringFromRunes(s, range.begin, range.end - 1);
+            std::cout << tmp << std::endl;
             words.push_back(tmp);
         }
 

@@ -74,6 +74,7 @@ void Trie::Find(RuneStrArray::const_iterator begin, RuneStrArray::const_iterator
             }
 
             ptNode = citer->second;
+            // 构建候选词
             if (NULL != ptNode->ptValue) {
                 res[i].nexts.push_back(pair<size_t, const DictUnit*>(j, ptNode->ptValue));
             }

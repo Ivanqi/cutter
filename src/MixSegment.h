@@ -53,10 +53,12 @@ class MixSegment: public SegmentTagged
             PreFilter::Range range;
             vector<WordRange> wrs;
 
-            wrs.reserve(sentence.size() / 2);
+            wrs.reserve(sentence.size() / 2);   // 设置wrs的空间
 
             while (pre_filter.HasNext()) {
                 range = pre_filter.Next();
+                string tmp = GetStringFromRunes(sentence, range.begin, range.end - 1);
+                std::cout << tmp << std::endl;
                 Cut(range.begin, range.end, wrs, hmm);
             }
 

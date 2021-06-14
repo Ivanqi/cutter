@@ -10,7 +10,10 @@
 
 /**
  * (Maximum Probability)最大概率法
- * 负责根据Trie树构建有向无环图进行动态规划算法，是分词算法的核型
+ * 负责根据Trie树构建有向无环图进行动态规划算法，是分词算法的核心
+ * 
+ * 构造一个前缀词典，然后利用前缀词典对输入句子进行切分，得到所有的切分位置，根据切分位置，构造一个有向无环图
+ * 通过动态规划算法，计算得到最大概率路径，也就得到了最终的切分形式
  */
 class MPSegment: public SegmentTagged
 {
@@ -61,7 +64,7 @@ class MPSegment: public SegmentTagged
 
             while (pre_filter.HasNext()) {
                 range = pre_filter.Next();
-                Cut(range.begin, range.end,wrs, max_word_len);
+                Cut(range.begin, range.end, wrs, max_word_len);
             }
 
             words.clear();
@@ -72,6 +75,7 @@ class MPSegment: public SegmentTagged
         void Cut(RuneStrArray::const_iterator begin, RuneStrArray::const_iterator end, vector<WordRange>& words, size_t max_word_len = MAX_WORD_LENGTH) const
         {
             vector<Dag> dags;
+            // 通过前缀树构建候选词
             dictTrie_->Find(begin, end, dags, max_word_len);
 
             CalcDP(dags);
@@ -101,6 +105,7 @@ class MPSegment: public SegmentTagged
             const DictUnit *p;
             double val;
 
+            // 前趋词
             for (vector<Dag>::reverse_iterator rit = dags.rbegin(); rit != dags.rend(); rit++) {
                 rit->pInfo = NULL;
                 rit->weight = MIN_DOUBLE;
