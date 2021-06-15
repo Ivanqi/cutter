@@ -200,7 +200,7 @@ void DictTrie::LoadDict(const string& filePath)
     for (size_t lineno = 0; getline(ifs, line); lineno++) {
         split(line, buf, " ");
 
-        if (buf.size() < DICT_COLUMN_NUM) {
+        if (buf.size() > DICT_COLUMN_NUM) {
             printf("split result illegal line: %s\n", line.c_str());
             continue;
         }

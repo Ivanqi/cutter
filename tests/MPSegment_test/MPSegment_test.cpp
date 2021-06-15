@@ -20,6 +20,24 @@ void test_case_1() {
         cout << "actual: " << actual << endl;
         assert(actual == expected);
     }
+
+    {
+        sentence = "B超 T恤";
+        expected = "B超/ /T恤";
+        mpsegment.Cut(sentence, words);
+        actual = Join(words.begin(), words.end(), "/");
+        cout << "actual: " << actual << endl;
+        assert(actual == expected);
+    }
+
+    {
+        sentence = "他来到了网易杭研大厦";
+        expected = "他/来到/了/网易/杭/研/大厦";
+        mpsegment.Cut(sentence, words);
+        actual = Join(words.begin(), words.end(), "/");
+        cout << "actual: " << actual << endl;
+        assert(actual == expected);
+    }
 }
 
 int main() {
