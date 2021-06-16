@@ -5,6 +5,7 @@
 #include <fstream>
 #include <memory.h>
 #include <cassert>
+#include "DictTrie.h"
 #include "HMMModel.h"
 #include "SegmentBase.h"
 
